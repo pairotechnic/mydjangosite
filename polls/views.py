@@ -19,9 +19,7 @@ from .models import Question
 
 def index(request):
     '''
-        Displays the latest 5 poll questions in the system, 
-        separated by commas, 
-        according to publication date
+        Gets the latest 5 questions by publication date and passes it to a template
     '''
     latest_question_list = Question.objects.order_by("-pub_date")[:5]
     template = loader.get_template("polls/index.html")
