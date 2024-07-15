@@ -14,12 +14,17 @@
 from django.http import HttpResponse
 
 # Local Application Imports
+from .models import Question
 
 def index(request):
     '''
-        Displays a Hello World message on the screen
+        Displays the latest 5 poll questions in the system, 
+        separated by commas, 
+        according to publication date
     '''
-    return HttpResponse("Hello World. You're at the polls index.")
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    output = ", ".join([q.question_text for q in latest_question_list])
+    return HttpResponse(output)
 
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s" % question_id)
