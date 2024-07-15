@@ -13,6 +13,7 @@
 # Third Party Imports
 from django.http import HttpResponse
 from django.template import loader
+from django.shortcuts import render
 
 # Local Application Imports
 from .models import Question
@@ -22,11 +23,11 @@ def index(request):
         Gets the latest 5 questions by publication date and passes it to a template
     '''
     latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    template = loader.get_template("polls/index.html")
+    
     context = {
         "latest_question_list" : latest_question_list
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, "polls/index.html", context)
 
 def detail(request, question_id):
     return HttpResponse("You're looking at question %s" % question_id)
