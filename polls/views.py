@@ -43,7 +43,7 @@ def results(request, question_id):
         Displays results for a given question if it exists
     '''
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/result.html", {"question":question})
+    return render(request, "polls/results.html", {"question":question})
 
 def vote(request, question_id):
     '''
