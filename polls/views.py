@@ -38,13 +38,16 @@ def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, "polls/detail.html", {"question": question})
 
-def results(requests, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+def results(request, question_id):
+    '''
+        Displays results for a given question if it exists
+    '''
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/result.html", {"question":question})
 
 def vote(request, question_id):
     '''
-        Updates the count of selected choice for the given question
+        Updates the count of selected choice for the given question if it exists
     '''
     question = get_object_or_404(Question, pk=question_id)
     try:
