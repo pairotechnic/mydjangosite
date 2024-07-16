@@ -16,34 +16,26 @@ from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.db.models import F
 from django.urls import reverse
+from django.views import generic
 
 # Local Application Imports
 from .models import Question, Choice
 
-def index(request):
-    '''
-        Gets the latest 5 questions by publication date and passes it to a template
-    '''
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name = "latest_question_list"
+
+    def get_queryset(self):
+        # Return the last 5 published questions 
+        return Question.objects.all().order_by("-pub_date")[:5]
     
-    context = {
-        "latest_question_list" : latest_question_list
-    }
-    return render(request, "polls/index.html", context)
+class DetailView(generic.DetailView):
+    model=Question
+    template_name = "polls/detail.html"
 
-def detail(request, question_id):
-    '''
-        Shows details of a specific question if it exists
-    '''
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/detail.html", {"question": question})
-
-def results(request, question_id):
-    '''
-        Displays results for a given question if it exists
-    '''
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "polls/results.html", {"question":question})
+class ResultsView(generic.DetailView):
+    model=Question
+    template_name = "polls/results.html"
 
 def vote(request, question_id):
     '''
