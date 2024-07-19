@@ -1,5 +1,17 @@
 {% extends "admin/base.html" %}
 
+{% comment %}
+    Purpose : Overridde the default django admin template
+    Author : Rohit Pai
+    Date : 19th July 2024
+
+    Note that any of Django’s default admin templates can be overridden. 
+    To override a template, do the same thing you did with base_site.html 
+    – copy it from the default directory into your custom directory, and make changes.
+
+{% endcomment %}
+
+
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block branding %}
